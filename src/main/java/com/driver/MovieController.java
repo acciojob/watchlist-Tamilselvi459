@@ -13,7 +13,7 @@ public class MovieController {
     MovieService movs;
 
 @PostMapping("/add-movie")
-    public ResponseEntity addmov(@RequestBody Movie movie){
+    public ResponseEntity addMovie(@RequestBody Movie movie){
     boolean ans = movs.add(movie);
     if(ans==true) {
       return new ResponseEntity<>("movie created" , HttpStatus.OK);
