@@ -12,7 +12,7 @@ public class MovieController {
 @Autowired
     MovieService movs;
 
-@PostMapping("/addMovie")
+@PostMapping("/add-movie")
     public ResponseEntity addmov(@RequestBody Movie movie){
     boolean ans = movs.add(movie);
     if(ans==true) {
