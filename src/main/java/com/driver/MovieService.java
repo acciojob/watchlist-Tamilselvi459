@@ -32,4 +32,18 @@ public class MovieService {
         }
         return op.get();
     }
+
+    public Director getbynamedir(String name) {
+        Optional<Director> opt = movr.getMovieBydir(name);
+        if(opt.isEmpty()){
+            throw new DirectornamenotFound(name);
+        }
+        return opt.get();
+    }
+    public boolean deletedir(String name){
+        Optional<Director> opt = movr.getMovieBydir(name);
+        if(opt.isEmpty())
+            throw new DirectornamenotFound(name);
+        return movr.deletedirector(name);
+    }
 }

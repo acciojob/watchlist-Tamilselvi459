@@ -33,4 +33,8 @@ public class MovieRepository {
         }
         return Optional.empty();
     }
+    public boolean deletedirector(String name){
+        hm.remove(name);
+        return true;
+    }
 }
