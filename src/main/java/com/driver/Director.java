@@ -5,6 +5,9 @@ public class Director {
     private int numberOfMovies;
     private double imdbRating;
 
+    public Director() {
+    }
+
     public String getName() {
         return name;
     }

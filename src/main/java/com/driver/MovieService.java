@@ -3,47 +3,51 @@ package com.driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class MovieService {
 
     @Autowired
-    MovieRepository movr;
+    MovieRepository movierepository;
 
-    public boolean add(Movie movie){
-    Optional<Movie> optmov = movr.getMoviebyname(movie.getName());
-    if(optmov.isPresent()){
-        return false;
-    }
-    return movr.addmovie(movie);
+
+    public String addMovie(Movie movie) {
+         movierepository.addMovie(movie);
+         return "Movie added  successfully";
     }
 
-    public boolean addd(Director director) {
-        Optional<Director> optdir = movr.getMovieBydir(director.getName());
-        if(optdir.isPresent()){
-            return false;
-        }
-        return movr.adddirec(director);
-    }
-    public Movie getbyname(String name){
-        Optional<Movie> op = movr.getMoviebyname(name);
-        if(op.isEmpty()){
-             throw new MovieNotFound(name);
-        }
-        return op.get();
+    public String addDirector(Director director) {
+        movierepository.addDirector(director);
+        return "Director added successfully";
     }
 
-    public Director getbynamedir(String name) {
-        Optional<Director> opt = movr.getMovieBydir(name);
-        if(opt.isEmpty()){
-            throw new DirectornamenotFound(name);
-        }
-        return opt.get();
+    public String addMovieDirectorPair(String moviename, String directorname) {
+      movierepository.addMovieDirectorPair(moviename,directorname);
+      return "Pair connected successfully";
     }
-    public boolean deletedir(String name){
-        Optional<Director> opt = movr.getMovieBydir(name);
-        if(opt.isEmpty())
-            throw new DirectornamenotFound(name);
-        return movr.deletedirector(name);
+
+    public Movie getMovieByName(String name) {
+        return movierepository.getMovieByName(name);
+    }
+
+    public Director getDirectorByName(String name) {
+        return movierepository.getDirectorByName(name);
+    }
+
+    public List<String> getMovieByDirectorName(String name) {
+        return movierepository.getMovieByDirectorName(name);
+    }
+
+    public List<String> findAllMovies() {
+        return movierepository.findAllMovies();
+    }
+
+    public String deleteDirectorByName(String name) {
+        return movierepository.deleteDirectorByName(name);
+    }
+
+    public String deleteAllDirector() {
+        return movierepository.deleteAllDirector();
     }
 }

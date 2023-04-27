@@ -2,39 +2,83 @@ package com.driver;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 @Repository
 
 public class MovieRepository {
 
-    Map<String ,Movie > data = new HashMap<>();
-    Map<String , Director> hm = new HashMap<>();
+    HashMap<String ,Movie > moviehm = new HashMap<>();
+    HashMap<String , Director> directorhm = new HashMap<>();
+    HashMap<String,String> moviedirectorpair = new HashMap<>();
 
-    public boolean addmovie(Movie movie){
-        data.put(movie.getName(),movie);
-        return true;
+    public void addMovie(Movie movie) {
+        moviehm.put(movie.getName(),movie);
     }
 
-    public Optional<Movie> getMoviebyname(String name) {
-        if(data.containsKey(name)){
-            return Optional.of(data.get(name));
+
+    public void addDirector(Director director) {
+        directorhm.put(director.getName(),director);
+    }
+
+    public void addMovieDirectorPair(String moviename, String directorname) {
+        moviedirectorpair.put(moviename,directorname);
+    }
+
+    public Movie getMovieByName(String name) {
+       Movie movie =  moviehm.get(name);
+       return movie;
+    }
+
+    public Director getDirectorByName(String name) {
+        Director director  = directorhm.get(name);
+        return director;
+    }
+
+    public List<String> getMovieByDirectorName(String name) {
+        List<String> ans = new ArrayList<>();
+      for(Map.Entry<String, String> entry : moviedirectorpair.entrySet()){
+          String a = entry.getValue();
+         if(name.equals(a)) ans.add(entry.getKey());
+      }
+      return ans;
+    }
+
+    public List<String> findAllMovies() {
+        List<String> ans = new ArrayList<>();
+        for(Map.Entry<String,Movie> entry : moviehm.entrySet()){
+            ans.add(entry.getKey());
         }
-        return Optional.empty();
+        return ans;
     }
-   public boolean adddirec(Director director){
-        hm.put(director.getName() , director);
-        return true;
-   }
-    public Optional<Director> getMovieBydir(String name) {
-        if(hm.containsKey(name)){
-            return Optional.of(hm.get(name));
+
+    public String deleteDirectorByName(String name) {
+        directorhm.remove(name);
+        for(Map.Entry<String,String>entry : moviedirectorpair.entrySet()){
+            String a = entry.getValue();
+            if(name.equals(a)){
+                moviehm.remove(entry.getKey());
+                moviedirectorpair.remove(entry.getKey());
+            }
         }
-        return Optional.empty();
+        return "director deleted successfully";
     }
-    public boolean deletedirector(String name){
-        hm.remove(name);
-        return true;
+
+    public String deleteAllDirector() {
+        for(String name : directorhm.keySet()){
+
+            directorhm.remove(name);
+
+            for(Map.Entry<String,String> entr : moviedirectorpair.entrySet()){
+                String a = entr.getValue();
+                if(name.equals(a)) {
+                    moviehm.remove(entr.getKey());
+                    moviedirectorpair.remove(entr.getKey());
+                }
+            }
+        }
+        return "Delete All directors and movie";
     }
+
+
 }
