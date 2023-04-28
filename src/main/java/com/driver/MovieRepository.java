@@ -13,11 +13,13 @@ public class MovieRepository {
     HashMap<String,String> moviedirectorpair = new HashMap<>();
 
     public void addMovie(Movie movie) {
+
         moviehm.put(movie.getName(),movie);
     }
 
 
     public void addDirector(Director director) {
+
         directorhm.put(director.getName(),director);
     }
 
@@ -52,7 +54,7 @@ public class MovieRepository {
         return ans;
     }
 
-    public String deleteDirectorByName(String name) {
+    public void  deleteDirectorByName(String name) {
         directorhm.remove(name);
         for(Map.Entry<String,String>entry : moviedirectorpair.entrySet()){
             String a = entry.getValue();
@@ -61,23 +63,23 @@ public class MovieRepository {
                 moviedirectorpair.remove(entry.getKey());
             }
         }
-        return "director deleted successfully";
+
     }
 
-    public String deleteAllDirector() {
+    public void  deleteAllDirector() {
         for(String name : directorhm.keySet()){
 
             directorhm.remove(name);
 
-            for(Map.Entry<String,String> entr : moviedirectorpair.entrySet()){
-                String a = entr.getValue();
+            for(Map.Entry<String,String> entry : moviedirectorpair.entrySet()){
+                String a = entry.getValue();
                 if(name.equals(a)) {
-                    moviehm.remove(entr.getKey());
-                    moviedirectorpair.remove(entr.getKey());
+                    moviehm.remove(entry.getKey());
+                    moviedirectorpair.remove(entry.getKey());
                 }
             }
         }
-        return "Delete All directors and movie";
+
     }
 
 
