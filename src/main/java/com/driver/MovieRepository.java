@@ -56,29 +56,41 @@ public class MovieRepository {
 
     public void  deleteDirectorByName(String name) {
         directorhm.remove(name);
+        boolean flag = false;
+        List<String> list = new ArrayList<>();
         for(Map.Entry<String,String>entry : moviedirectorpair.entrySet()){
             String a = entry.getValue();
             if(name.equals(a)){
                 moviehm.remove(entry.getKey());
-                moviedirectorpair.remove(entry.getKey());
+                flag = true;
+                list.add(a);
             }
+        }
+        if(flag==true){
+        for(String mname : list){
+            moviedirectorpair.remove(mname); }
         }
 
     }
 
     public void  deleteAllDirector() {
+        List<String> dirname = new ArrayList<>();
+        List<String> mdir = new ArrayList<>();
         for(String name : directorhm.keySet()){
 
-            directorhm.remove(name);
+            dirname.add(name);
 
             for(Map.Entry<String,String> entry : moviedirectorpair.entrySet()){
                 String a = entry.getValue();
                 if(name.equals(a)) {
                     moviehm.remove(entry.getKey());
-                    moviedirectorpair.remove(entry.getKey());
+                    mdir.add(entry.getKey());
+                    // moviedirectorpair.remove(entry.getKey());
                 }
             }
         }
+        for(String name : dirname) directorhm.remove(name);
+        for(String name : mdir) moviedirectorpair.remove(name);
 
     }
 
